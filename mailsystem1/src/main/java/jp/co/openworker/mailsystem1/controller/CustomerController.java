@@ -6,13 +6,12 @@ package jp.co.openworker.mailsystem1.controller;
 	import org.springframework.web.bind.annotation.RequestMethod;
 
 	@Controller
-	@RequestMapping("/test")
+	@RequestMapping("/mailsystem/top_page")
 	public class CustomerController {
 
-	    @RequestMapping(method = RequestMethod.GET)
-	    public String test(Model model) {
-	        model.addAttribute("msg","サンプルメッセージ！");
-	        return "test/test";
+	    @RequestMapping("/")
+	    public String test() {
+	        return "top_page";
 	    }
 
 	}
