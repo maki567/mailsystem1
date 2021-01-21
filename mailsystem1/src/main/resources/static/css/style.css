@@ -14,10 +14,7 @@ header {
 .example p {
 	display: inline;
 	position: absolute;	
-	left: 50%;
-	-ms-transform: translate(-50%,-50%);
-    -webkit-transform: translate(-50%,-50%);
-    transform: translate(-50%,-50%);
+	left: 650px;
 	font-size: 20px;
 	z-index: 2;
 }
