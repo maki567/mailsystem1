@@ -8,22 +8,50 @@ header {
 
 .logo {
 	display: inline;
+	z-index: 1;
 }
 
-.title {
-	display: block;
-	margin: auto;
+.example p {
+	display: inline;
+	position: absolute;	
+	left: 50%;
+	-ms-transform: translate(-50%,-50%);
+    -webkit-transform: translate(-50%,-50%);
+    transform: translate(-50%,-50%);
 	font-size: 20px;
+	z-index: 2;
 }
 
 .home_icon1 {
 	width: 150px;
 	height: 150px;
 	display: inline-block;
+	position: absolute;
+	top: 250px;
+	left: 400px;
 }
 
 .home_icon2 {
-	width: 130px;
-	height: 130px;
+	width: 150px;
+	height: 150px;
 	display: inline-block;
+	position: absolute;
+	top: 250px;
+	left: 800px;
 }
+
+.sinki {
+	position: absolute;
+	top: 400px;
+	left: 415px;
+}
+
+.log {
+	position: absolute;
+	top: 400px;
+	left: 830px;
+}
+
+
+
+
