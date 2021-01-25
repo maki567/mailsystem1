@@ -31,6 +31,8 @@
 			<th>メールアドレス</th>
 			<td>
 				<input type="email" name="mailAddress" placeholder="XXX@abc.com" maxlength="32">
+				<button id="checkMailAddress">重複確認</button>
+				<span id="checkOK" class="hidden">OK</span>
 			</td>
 		<tr>
 			<th>パスワード<span class="note"> 　</span></th>
@@ -48,7 +50,7 @@
 </div>
 
 <!-- Modal Dialog (メールアドレス重複) -->
-<div th:insert="fragments/dialog_duplicated_mail_address::dialogDuplicatedUserName"></div>
+<div th:insert="fragments/dialog_duplicated_mail_address::dialogDuplicatedMailAddress"></div>
 
 <!-- Modal Dialog (ユーザー入力エラー) -->
 <div th:insert="fragments/dialog_input_user_error::dialogInputUserError"></div>

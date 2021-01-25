@@ -1,5 +1,6 @@
 package jp.co.openworker.mailsystem1.model.domain;
 
+import jp.co.open
 public class User {
 
 	private long id;
