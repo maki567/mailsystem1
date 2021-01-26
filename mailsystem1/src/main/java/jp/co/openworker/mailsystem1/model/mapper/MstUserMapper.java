@@ -7,7 +7,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import jp.co.internous.pegasus.model.domain.MstUser;
+import jp.co.openworker.mailsystem1.model.domain.MstUser;
 
 @Mapper
 public interface MstUserMapper {
