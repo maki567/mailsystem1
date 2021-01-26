@@ -11,15 +11,22 @@ public class MstUser {
 	private String password;
 	private String familyName;
 	private String firstName;
+	private String familyNameKana;
+	private String firstNameKana;
+	private int gender;
 	private Timestamp createdAt;
 	private Timestamp updatedAt;
 
 	public MstUser() {}
 
 	public MstUser(UserForm f) {
+		userName = f.getUserName();
 		password = f.getPassword();
 		familyName = f.getFamilyName();
 		firstName = f.getFirstName();
+		familyNameKana = f.getFamilyNameKana();
+		firstNameKana = f.getFirstNameKana();
+		gender = f.getGender();
 	}
 
 	public int getId() {
@@ -51,6 +58,24 @@ public class MstUser {
 	}
 	public void setFirstName(String firstName) {
 		this.firstName = firstName;
+	}
+	public String getFamilyNameKana() {
+		return familyNameKana;
+	}
+	public void setFamilyNameKana(String familyNameKana) {
+		this.familyNameKana = familyNameKana;
+	}
+	public String getFirstNameKana() {
+		return firstNameKana;
+	}
+	public void setFirstNameKana(String firstNameKana) {
+		this.firstNameKana = firstNameKana;
+	}
+	public int getGender() {
+		return gender;
+	}
+	public void setGender(int gender) {
+		this.gender = gender;
 	}
 	public Timestamp getCreatedAt() {
 		return createdAt;

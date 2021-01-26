@@ -21,16 +21,31 @@
 	
 	<table id="register" class="user">
 		<tr>
-			<th>名前</th>
+			<th>氏名</th>
 			<td>
 				<input type="text" name="familyName" placeholder="山田"maxlength="16" />
 				<input type="text" name="firstName" placeholder="太郎"maxlength="16" />
 			</td>
 		</tr>
 		<tr>
-			<th>メールアドレス</th>
-			<td>
-				<input type="email" name="mailAddress" placeholder="XXX@abc.com" maxlength="32">
+				<th>氏名ふりがな</th>
+				<td>
+					<input type="text" name="familyNameKana" placeholder="やまだ" maxlength="16" />
+					<input type="text" name="firstNameKana" placeholder="たろう" maxlength="16" />
+				</td>
+			</tr>
+			<tr>
+				<th>性別</th>
+				<td>
+					<label><input type="radio" name="gender" value="男性" checked />男性</label>
+					<label><input type="radio" name="gender" value="女性" />女性</label>
+				</td>
+			</tr>
+		<tr>
+			<th>ユーザー名<br /><span class="note">（メールアドレス）</span></th>
+				<td>
+			
+				<input type="email" name="userName" placeholder="XXX@abc.com" maxlength="32">
 				<button id="checkMailAddress">重複確認</button>
 				<span id="checkOK" class="hidden">OK</span>
 			</td>
@@ -49,8 +64,8 @@
 	</table>
 </div>
 
-<!-- Modal Dialog (メールアドレス重複) -->
-<div th:insert="fragments/dialog_duplicated_mail_address::dialogDuplicatedMailAddress"></div>
+<!-- Modal Dialog (ユーザー名重複) -->
+<div th:insert="fragments/dialog_duplicated_user_name::dialogDuplicatedUserName"></div>
 
 <!-- Modal Dialog (ユーザー入力エラー) -->
 <div th:insert="fragments/dialog_input_user_error::dialogInputUserError"></div>
@@ -64,20 +79,20 @@
 const errorSelector = {
 	'姓': '.familyNameError',
 	'名': '.firstNameError',
-	'メールアドレス': '.mailAddressError',
+	'ユーザー名': '.userNameError',
 	'パスワード': '.passwordError',
 };
 
 $(() => {
 
-	$('#duplicatedMailAddress').dialog(dialogConfig.duplicatedMailAddress);
+	$('#duplicatedUserName').dialog(dialogConfig.duplicatedUserName);
 	$('#inputUserError').dialog(dialogConfig.inputUserError);
 	$('#inputUserConfirm').dialog(dialogConfig.inputUserConfirm);
 	
-	$('button#checkMailAddress').on('click', () => {
-		let mailAdress = $('table#register input[name=mailAddress]');
+	$('button#checkUserName').on('click', () => {
+		let mailAdress = $('table#register input[name=userName]');
 		if (isEmpty($(mailAddress).val())) return;
-		checkMailAddress(mailAddress);
+		checkUserName(userName);
 	});
 	
 	$('button#confirm').on('click', () => {
@@ -86,7 +101,7 @@ $(() => {
 		let errInfo = validate({
 			'familyName': checker.familyName,
 			'firstName': checker.firstName,
-			'mailAddress': checker.mailAddress,
+			'userName': checker.userName,
 			'password': checker.password,
 		});
 		if (errInfo.isError) {
@@ -98,7 +113,7 @@ $(() => {
 			createConfirmDialog({
 				'familyName': checker.familyName,
 				'firstName': checker.firstName,
-				'mailAddress': checker.mailAddress,
+				'userName': checker.userName,
 				'password': checker.password,
 			});
 			$("#inputUserConfirm").dialog("open");
@@ -106,8 +121,8 @@ $(() => {
 	});
 });
 
-function checkMailAddress(mailAddress) {
-		let errInfo = validate({ 'mailAddress': checker.mailAddress });
+function checkUserName(userName) {
+		let errInfo = validate({ 'userName': checker.userName });
 		if (errInfo.isError) {
 				createErrorDialog(errInfo.errMsg);
 				$("#inputUserError").dialog("open");
@@ -116,15 +131,15 @@ function checkMailAddress(mailAddress) {
 	
 		$.ajax({
 			type: 'POST',
-			url: '/pegasus/user/duplicatedUserName',
-			data: mailAddress,
+			url: '/mailsystem1/user/duplicatedUserName',
+			data: userName,
 			scriptCharset: 'utf-8'
 		})
 		.then((result) => {
 			if (result) {	// 重複あり
 				$('button#confirm').prop('disabled', true);
-				$("#duplicatedMailAddress").dialog("open");
-				//$('button#checkMailAddress').prop('class', '');
+				$("#duplicatedUserName").dialog("open");
+				//$('button#checkUserName').prop('class', '');
 				$('span#checkOK').prop('class', 'hidden');
 			} else {			// 重複なし
 				$('button#confirm').prop('disabled', false);
