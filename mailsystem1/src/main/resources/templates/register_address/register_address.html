@@ -1,0 +1,145 @@
+<!doctype HTML>
+<html xmlns:th="http://www.thymelef.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>連絡先登録</title>
+	<link href="/css/reset.css" th:href="@{/css/reset.css}" rel="stylesheet" />
+	<link href="/css/register_address.css" th:href="@{/css/register_address.css}" rel="stylesheet" />
+</head>
+
+<body>
+	<header>
+		<div class="example">
+			<img src="./img/h_logo.jpg" class="logo">
+		</div>		
+	</header>
+
+<main>
+<div class="form">
+	<h2>連絡先登録</h2>
+	
+	<table id="register" class="user">
+		<tr>
+			<th>会社名</th>
+			<td>
+				<input type="text" name="familyName" placeholder="株式会社"maxlength="16" />
+			</td>
+		</tr>
+		<tr>
+			<th>連絡先</th>
+			<td>
+			<p>
+				<input type="email" name="mailAddress" placeholder="XXX@abc.com" maxlength="32">
+				<button id="checkMailAddress">重複確認</button>
+				<span id="checkOK" class="hidden">OK</span>
+			</td>
+		<tr>
+			<th>パスワード<span class="note"> 　</span></th>
+			<td>
+				<input type="password" name="password" placeholder="6~16文字"maxlength="16" />
+			</td>
+		<tr>
+			<th class="buttonArea">
+				<span class="info hidden">登録が完了しました。</span>
+			</th>
+			<th class="buttonArea">
+				<button id="confirm" disabled>確認</button>
+			</th>
+	</table>
+</div>
+
+<!-- Modal Dialog (メールアドレス重複) -->
+<div th:insert="fragments/dialog_duplicated_mail_address::dialogDuplicatedMailAddress"></div>
+
+<!-- Modal Dialog (ユーザー入力エラー) -->
+<div th:insert="fragments/dialog_input_user_error::dialogInputUserError"></div>
+
+<!-- Modal Dialog (入力内容確認) -->
+<div th:insert="fragments/dialog_input_user_confirm::dialogInputUserConfirm"></div>
+
+</main>
+
+<script>
+const errorSelector = {
+	'姓': '.familyNameError',
+	'名': '.firstNameError',
+	'メールアドレス': '.mailAddressError',
+	'パスワード': '.passwordError',
+};
+
+$(() => {
+
+	$('#duplicatedMailAddress').dialog(dialogConfig.duplicatedMailAddress);
+	$('#inputUserError').dialog(dialogConfig.inputUserError);
+	$('#inputUserConfirm').dialog(dialogConfig.inputUserConfirm);
+	
+	$('button#checkMailAddress').on('click', () => {
+		let mailAdress = $('table#register input[name=mailAddress]');
+		if (isEmpty($(mailAddress).val())) return;
+		checkMailAddress(mailAddress);
+	});
+	
+	$('button#confirm').on('click', () => {
+	// 入力チェック処理(validate.js:validate(checkerConfig))を呼び出す
+	// 引数はvalidate.js:checkerからチェックしたい項目の変数の宣言を作成する
+		let errInfo = validate({
+			'familyName': checker.familyName,
+			'firstName': checker.firstName,
+			'mailAddress': checker.mailAddress,
+			'password': checker.password,
+		});
+		if (errInfo.isError) {
+			// エラーがあればエラーダイアログを表示する(volidator.js:createErrorDialog(checkerConfig))
+			createErrorDialog(errInfo.errMsg);
+			$("#inputUserError").dialog("open");
+		} else {
+			// エラーがなければ、確認ダイアログを表示する(dialogConfig.js:createConfirmDialog(checkerConfig))
+			createConfirmDialog({
+				'familyName': checker.familyName,
+				'firstName': checker.firstName,
+				'mailAddress': checker.mailAddress,
+				'password': checker.password,
+			});
+			$("#inputUserConfirm").dialog("open");
+		}
+	});
+});
+
+function checkMailAddress(mailAddress) {
+		let errInfo = validate({ 'mailAddress': checker.mailAddress });
+		if (errInfo.isError) {
+				createErrorDialog(errInfo.errMsg);
+				$("#inputUserError").dialog("open");
+				return;
+			}
+	
+		$.ajax({
+			type: 'POST',
+			url: '/pegasus/user/duplicatedUserName',
+			data: mailAddress,
+			scriptCharset: 'utf-8'
+		})
+		.then((result) => {
+			if (result) {	// 重複あり
+				$('button#confirm').prop('disabled', true);
+				$("#duplicatedMailAddress").dialog("open");
+				//$('button#checkMailAddress').prop('class', '');
+				$('span#checkOK').prop('class', 'hidden');
+			} else {			// 重複なし
+				$('button#confirm').prop('disabled', false);
+				//$('button#checkMailAddress').prop('class', 'hidden');
+				$('span#checkOK').prop('class', 'info');
+			}
+		}, () => {
+			alert('Error: ajax connection failed.');
+		});
+	
+}
+
+</script>
+
+
+</body>
+
+</html>
