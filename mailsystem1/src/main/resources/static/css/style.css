@@ -60,7 +60,6 @@ span.signup {
 span.signup a {
 	text-decoration: none;
 	text-decoration-line: underline;
-	color: #ffffff;
 	font-size: 0.8em;
 }
 /*新規ユーザー登録はこちらにマウスオーバーしたとき*/
@@ -127,9 +126,9 @@ th {
 	padding: 5px;
 	height: 20px;
 	vertical-align: middle;
-	background: #c0c0c0;
-	border: 1px solid #777777;
-	font-weight: normal;
+	background:rgb(201, 236, 191);
+	border: 1px solid #228B22;
+	font-weight: bold;
 }
 
 .top th {
@@ -339,3 +338,38 @@ div.cart form {
 	top: 400px;
 	left: 925px;
 }
+
+/*register_address*/
+
+.staffmail {
+	position: relative;
+	left: 185px;
+}
+
+.staff {
+	display: inline; 
+	position: relative;
+	top: 15px;
+	font-weight: bold;
+}
+
+.staffform {
+	padding-bottom: 20px;
+	font-weight: bold;
+}
+
+.title {
+	margin: 30px;
+	font-weight: bold;
+}
+
+
+
+
+
+
+
+
+
+
+

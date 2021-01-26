@@ -5,19 +5,15 @@
 	<meta charset="UTF-8">
 	<title>新規登録画面</title>
 	<link href="/css/reset.css" th:href="@{/css/reset.css}" rel="stylesheet" />
-	<link href="/css/register_user.css" th:href="@{/css/register_user.css}" rel="stylesheet" />
+	<link href="/css/style.css" th:href="@{/css/style.css}" rel="stylesheet" />
 </head>
 
 <body>
-	<header>
-		<div class="example">
-			<img src="./img/h_logo.jpg" class="logo">
-		</div>		
-	</header>
+	<header th:insert="fragments/page_header::commonHeader"></header>
 
 <main>
 <div class="form">
-	<h2>新規ユーザー登録</h2>
+	<h2 class="title">新規ユーザー登録</h2>
 	
 	<table id="register" class="user">
 		<tr>
