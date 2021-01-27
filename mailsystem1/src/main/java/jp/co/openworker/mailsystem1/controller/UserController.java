@@ -26,7 +26,7 @@ public class UserController {
 	@RequestMapping("/")
 	public String index(Model m) {
 		m.addAttribute("loginSession", loginSession);
-		return "register_user";
+		return "register_user/register_user";
 	}
 	
 	@RequestMapping("/duplicatedUserName")
