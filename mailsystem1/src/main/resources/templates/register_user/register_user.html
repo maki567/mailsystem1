@@ -72,22 +72,26 @@
 </main>
 
 <script>
+// dialog_input_user_error.htmlのエラーメッセージを表示するdivのクラスを定義
 const errorSelector = {
 	'姓': '.familyNameError',
 	'名': '.firstNameError',
+	'姓ふりがな': '.familyNameKanaError',
+	'名ふりがな': '.firstNameKanaError',
 	'ユーザー名': '.userNameError',
 	'パスワード': '.passwordError',
 };
 
 $(() => {
-
+	
+	// jQuery-UIダイアログの初期設定
 	$('#duplicatedUserName').dialog(dialogConfig.duplicatedUserName);
 	$('#inputUserError').dialog(dialogConfig.inputUserError);
 	$('#inputUserConfirm').dialog(dialogConfig.inputUserConfirm);
 	
 	$('button#checkUserName').on('click', () => {
-		let mailAdress = $('table#register input[name=userName]');
-		if (isEmpty($(mailAddress).val())) return;
+		let userName = $('table#register input[name=userName]');
+		if (isEmpty($(userName).val())) return;
 		checkUserName(userName);
 	});
 	
@@ -97,6 +101,9 @@ $(() => {
 		let errInfo = validate({
 			'familyName': checker.familyName,
 			'firstName': checker.firstName,
+			'familyNameKana': checker.familyNameKana,
+			'firstNameKana': checker.firstNameKana,
+			'gender': null,
 			'userName': checker.userName,
 			'password': checker.password,
 		});
@@ -109,6 +116,9 @@ $(() => {
 			createConfirmDialog({
 				'familyName': checker.familyName,
 				'firstName': checker.firstName,
+				'familyNameKana': checker.familyNameKana,
+				'firstNameKana': checker.firstNameKana,
+				'gender': null,
 				'userName': checker.userName,
 				'password': checker.password,
 			});
@@ -117,7 +127,7 @@ $(() => {
 	});
 });
 
-function checkUserName(userName) {
+	function checkUserName(userName) {
 		let errInfo = validate({ 'userName': checker.userName });
 		if (errInfo.isError) {
 				createErrorDialog(errInfo.errMsg);
@@ -139,7 +149,7 @@ function checkUserName(userName) {
 				$('span#checkOK').prop('class', 'hidden');
 			} else {			// 重複なし
 				$('button#confirm').prop('disabled', false);
-				//$('button#checkMailAddress').prop('class', 'hidden');
+				//$('button#checkUserName').prop('class', 'hidden');
 				$('span#checkOK').prop('class', 'info');
 			}
 		}, () => {
@@ -150,7 +160,5 @@ function checkUserName(userName) {
 
 </script>
 
-
 </body>
-
 </html>
